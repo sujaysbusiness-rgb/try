@@ -726,13 +726,25 @@
             const [rawTrades, setRawTrades] = useState(null);
             const [hasCharges, setHasCharges] = useState(true);
 
+            
+
+
             useEffect(() => {
-                if (selectedBroker && uploadSectionRef.current) {
-                    setTimeout(() => {
-                        uploadSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                }
+                if (!selectedBroker || !uploadSectionRef.current) return;
+
+                const yOffset = -580; // adjust this
+                const y =
+                    uploadSectionRef.current.getBoundingClientRect().top +
+                    window.pageYOffset +
+                    yOffset;
+
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth',
+                });
             }, [selectedBroker]);
+
+
 
             useEffect(() => {
                 if (rawTrades) {
