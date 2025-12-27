@@ -98,7 +98,7 @@
                 dateFmt: "yyyy-mm-dd"
             },
             other: {
-                id: 'other', name: "Other Broker (Manual)", color: "text-slate-600", bg: "bg-slate-50",
+                id: 'other', name: "Other Broker", color: "text-slate-600", bg: "bg-slate-50",
                 mappings: null, 
                 dateFmt: "auto"
             }
@@ -504,7 +504,7 @@
             if (revengeTradeCount > 2) { const failRate = Math.round((revengeLossCount / revengeTradeCount) * 100); review.behavioral.push(`Revenge Trading Loop: You frequently re-enter the market within 15 minutes of a loss (${revengeTradeCount} times). ${failRate}% of these impulsive trades resulted in further losses. You are trading your P&L, not the chart setup.`); }
             if (avgTradesPerDay > 10) review.behavioral.push("Over-trading Alert: You are averaging over 10 trades per session. Unless you are an algo, this leads to decision fatigue and high brokerage costs. Try to limit yourself to the 3 best setups per day.");
             let worstDayIdx = -1, worstDayPnL = Infinity; dayStats.forEach((d, i) => { if (i>0 && i<6 && d.count>3 && d.pnl < worstDayPnL) { worstDayPnL = d.pnl; worstDayIdx = i; } });
-            if (worstDayPnL < 0) review.behavioral.push(`Calendar Weakness: You have a statistically significant leak on ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][worstDayIdx]}s. This could be due to weekly expiry volatility or end-of-week fatigue. Consider reducing size on this day.`);
+            if (worstDayPnL < 0) review.behavioral.push(`Calendar Weakness: You have a statistically significant leak on ${['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][worstDayIdx]}s. This could be due to weekly expiry volatility or end-of-week fatigue. Consider reducing size on this day.`);
             const morningPnL = (entryHourStats[9]?.pnl || 0) + (entryHourStats[10]?.pnl || 0);
             if (morningPnL < -Math.abs(finalEquity * 0.1)) review.behavioral.push("Morning Chaos: You are losing money in the opening hour (9-11 AM). This is the most volatile time. Consider waiting until 10:30 AM for price action to settle.");
             if (profitFactor < 1.0) review.actionable.push("Capital Preservation Mode: Stop increasing your position size. Do not add funds until your Profit Factor crosses 1.2 for at least 30 consecutive trades.");
